@@ -5,9 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-public class FavoritesDAO {
+public class ProductDAO {
 	Connection conn = null;
 	PreparedStatement pstm = null;
 	ResultSet rs = null;
@@ -47,27 +46,31 @@ public class FavoritesDAO {
 		}
 	}
 	
-	public ArrayList<FavoritesDTO> favoritesSelectList(String id){
+	public ProducDTO favoritesSelect(String model) {
 		getConnect();
-		String sql = "select * from favorites where id=?";
-		ArrayList<FavoritesDTO> dtos = new ArrayList<FavoritesDTO>();
+		String sql = "select * from product where model=?";
+		ProducDTO dto = null;
 		try {
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, id);
+			pstm.setString(1, model);
 			rs = pstm.executeQuery();
 			while(rs.next()) {
-				String uId = rs.getString(1);
-				String model = rs.getString(2);
-				String name = rs.getString(3);
-				String category = rs.getString(4);
-				FavoritesDTO dto = new FavoritesDTO(uId, model, name, category);
-				dtos.add(dto);
+				String pModel = rs.getString(1);
+				String name = rs.getString(2);
+				String category = rs.getString(3);
+				int pClass = rs.getInt(4);
+				int maxEv = rs.getInt(5);
+				int eCost = rs.getInt(6);
+				int price = rs.getInt(7);
+				String img = rs.getString(8);
+				int refund = rs.getInt(9);
+				dto = new ProducDTO(pModel, name, category, pClass, maxEv, eCost, price, img, refund);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close();
 		}
-		return dtos;
+		return dto;
 	}
 }
