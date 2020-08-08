@@ -26,3 +26,4 @@ category varchar2(50)
 );
 
 insert into favorites values('userId1','¸ğµ¨¸í1','³ÃÀå°íÀÌ¸§1','³ÃÀå°í');
+insert into favorites values('userId1','¸ğµ¨¸í2','³ÃÀå°íÀÌ¸§2','³ÃÀå°í');
